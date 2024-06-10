@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">gallery</string>
+    <string name="slide_1_title">Flying birds</string>
+    <string name="slide_1_author">Birdo (1821)</string>
+    <string name="slide_1_desc">Birds being birds</string>
+    <string name="slide_2_title">Existential Crisis</string>
+    <string name="slide_2_author">Unknown (2001)</string>
+    <string name="slide_2_desc">T rex roaring</string>
+    <string name="slide_3_title">Her</string>
+    <string name="slide_3_author">Almumtazza (2023)</string>
+    <string name="slide_3_desc">Girl with vibrant colors on face</string>
 </resources>

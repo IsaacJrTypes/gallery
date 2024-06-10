@@ -15,8 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gallery.ui.theme.GalleryTheme
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +41,37 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GalleryScreen() {
+    val images = listOf(
+        R.drawable.birds,
+        R.drawable.dinosaur,
+        R.drawable.owl,
+    )
+    val title = listOf(
+        R.string.slide_1_title,
+        R.string.slide_2_title,
+        R.string.slide_3_title,
+    )
+    val author = listOf(
+        R.string.slide_1_author,
+        R.string.slide_2_author,
+        R.string.slide_3_author,
+    )
+    val description = listOf(
+        R.string.slide_1_desc,
+        R.string.slide_2_desc,
+        R.string.slide_3_desc,
+    )
+
+
+
+    var slides by remember { mutableStateOf(0) }
+    fun nextSlide () {
+        slides = (slides + 1) % images.size
+    }
+    fun prevSlide () {
+        slides = if (slides - 1 < 0) images.size - 1 else slides - 1
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -54,8 +90,8 @@ fun GalleryScreen() {
                 modifier = Modifier.background(Color.Blue)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.birds),
-                    contentDescription = null,
+                    painter = painterResource(id = images[slides]),
+                    contentDescription = stringResource(description[slides]),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(400.dp)
@@ -77,15 +113,18 @@ fun GalleryScreen() {
                     modifier = Modifier.align(Alignment.CenterVertically)
                 ) {
                     Text(
-                        text = "Existential Crisis",
+                        text = stringResource(title[slides]),
                         style = MaterialTheme.typography.headlineLarge,
                         modifier = Modifier.padding(top = 8.dp)
                     )
                     Text(
-                        text = "Unknown (2021)",
+                        text = stringResource(author[slides]),
                         style = MaterialTheme.typography.headlineMedium,
                         color = Color.Black,
                         modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                    Text(
+                        text = "${slides+1} of ${images.size}"
                     )
                 }
 
@@ -98,10 +137,10 @@ fun GalleryScreen() {
                     .padding(top = 20.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(onClick = { /* TODO */ }) {
+                Button(onClick = { prevSlide() }) {
                     Text(text = "Previous")
                 }
-                Button(onClick = { /* TODO */ }) {
+                Button(onClick = { nextSlide()}) {
                     Text(text = "Next")
                 }
             }
